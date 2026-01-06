@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "552780523955",
+    "project_id": "flutter-pro-firebase-facee",
+    "storage_bucket": "flutter-pro-firebase-facee.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:552780523955:android:b0c4a063d3e650f4a943c6",
+        "android_client_info": {
+          "package_name": "com.example.smart_queue_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBjOyLjKwAY0A1v7SIE23ZgjBEZxX5NBKg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

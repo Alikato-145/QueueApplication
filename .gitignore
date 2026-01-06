@@ -33,6 +33,9 @@ migrate_working_dir/
 /build/
 /coverage/
 
+# Flutter auth
+lib/firebase_options.dart
+
 # Symbolication related
 app.*.symbols
 
