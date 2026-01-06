@@ -18,4 +18,16 @@ class AuthViewModel extends ChangeNotifier {
       return false;
     }
   }
+
+  Future<bool> signup(String email,String password)async{
+    try{
+      await _authService.signUpWithEmailPassword(email,password);
+      await _authService.signOut();
+      return true;
+    }catch(e){
+      error = e.toString();
+      notifyListeners();
+      return false;
+    }
+  }
 }

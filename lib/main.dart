@@ -1,12 +1,25 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:smart_queue_app/auth/login_or_register.dart';
+import 'package:provider/provider.dart';
+import 'package:smart_queue_app/auth/auth_gate.dart';
 import 'package:smart_queue_app/firebase_options.dart';
+import 'package:smart_queue_app/service/auth_service.dart';
 import 'package:smart_queue_app/themes/light_mode.dart';
+import 'package:smart_queue_app/viewmodel/auth_viewmodel.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  runApp(const MyApp());
+
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => AuthViewModel(AuthService()),
+        ),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -17,7 +30,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      home: LoginOrRegister(),
+      home: AuthGate(),
       theme:lightMode,
     );
   }

@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:smart_queue_app/components/my_button.dart';
+import 'package:smart_queue_app/components/my_dialog.dart';
 import 'package:smart_queue_app/components/my_textfield.dart';
 import 'package:smart_queue_app/viewmodel/auth_viewmodel.dart';
 
 class LoginPage extends StatefulWidget {
   final VoidCallback ontap;
-  const LoginPage({super.key,required this.ontap});
-  
+  const LoginPage({super.key, required this.ontap});
+
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
@@ -16,22 +17,23 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-   Future<void> _onLogin(AuthViewModel vm) async {
+  Future<void> _onLogin(AuthViewModel vm) async {
     final success = await vm.login(
       _emailController.text,
       _passwordController.text,
     );
     if (!mounted) return;
     if (!success) {
-      showDialog(
+      AppDialog.show(
         context: context,
-        builder: (_) => AlertDialog(
-          title: Text(vm.error ?? "Login failed"),
-        ),
+        title: "Login Failed",
+        message: vm.error ?? "Please check your email or password",
+        icon: Icons.error_outline,
+        iconColor: Colors.red,
       );
     }
   }
-  
+
   @override
   Widget build(BuildContext context) {
     final authVM = context.watch<AuthViewModel>();
@@ -72,7 +74,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
             //login button
             SizedBox(height: 15),
-            MyButton(text: "Login", onPressed:()=> _onLogin(authVM),),
+            MyButton(text: "Login", onPressed: () => _onLogin(authVM)),
             //register now
             SizedBox(height: 15),
             Row(
