@@ -1,19 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import 'package:smart_queue_app/components/my_button.dart';
 import 'package:smart_queue_app/components/my_textfield.dart';
+import 'package:smart_queue_app/viewmodel/auth_viewmodel.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
+  final VoidCallback ontap;
+  const LoginPage({super.key,required this.ontap});
+  
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final VoidCallback ontap;
-  LoginPage({super.key,required this.ontap});
-
-  //email and pw controllers
-  void login() {}
-  void signup() {}
-
+   Future<void> _onLogin(AuthViewModel vm) async {
+    final success = await vm.login(
+      _emailController.text,
+      _passwordController.text,
+    );
+    if (!mounted) return;
+    if (!success) {
+      showDialog(
+        context: context,
+        builder: (_) => AlertDialog(
+          title: Text(vm.error ?? "Login failed"),
+        ),
+      );
+    }
+  }
+  
   @override
   Widget build(BuildContext context) {
+    final authVM = context.watch<AuthViewModel>();
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: Center(
@@ -51,7 +72,7 @@ class LoginPage extends StatelessWidget {
             ),
             //login button
             SizedBox(height: 15),
-            MyButton(text: "Login", onPressed: () {}),
+            MyButton(text: "Login", onPressed:()=> _onLogin(authVM),),
             //register now
             SizedBox(height: 15),
             Row(
@@ -65,7 +86,7 @@ class LoginPage extends StatelessWidget {
                   ),
                 ),
                 GestureDetector(
-                  onTap: ontap,
+                  onTap: widget.ontap,
                   child: Text(
                     "Register now",
                     style: TextStyle(fontWeight: FontWeight.bold),
@@ -79,5 +100,3 @@ class LoginPage extends StatelessWidget {
     );
   }
 }
-
-
