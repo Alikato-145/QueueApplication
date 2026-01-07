@@ -19,12 +19,23 @@ class AuthViewModel extends ChangeNotifier {
     }
   }
 
-  Future<bool> signup(String email,String password)async{
-    try{
-      await _authService.signUpWithEmailPassword(email,password);
+  Future<bool> signup(String email, String password) async {
+    try {
+      await _authService.signUpWithEmailPassword(email, password);
       await _authService.signOut();
       return true;
-    }catch(e){
+    } catch (e) {
+      error = e.toString();
+      notifyListeners();
+      return false;
+    }
+  }
+
+  Future<bool> logout() async {
+    try {
+      await _authService.signOut();
+      return true;
+    } catch (e) {
       error = e.toString();
       notifyListeners();
       return false;
