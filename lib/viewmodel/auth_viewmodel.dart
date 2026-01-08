@@ -31,14 +31,12 @@ class AuthViewModel extends ChangeNotifier {
     }
   }
 
-  Future<bool> logout() async {
+  Future<void> logout() async {
     try {
       await _authService.signOut();
-      return true;
     } catch (e) {
       error = e.toString();
       notifyListeners();
-      return false;
     }
   }
 }
